@@ -5519,7 +5519,7 @@
         return null;
     }
 
-    async function handle_xhttp_client(body, uuid) {
+    async function handle_xhttp_client(body, uuid, fallbackAddress) {
         if (ACTIVE_CONNECTIONS >= MAX_CONCURRENT) {
             return new Response('Too many connections', { status: 429 });
         }
@@ -5540,7 +5540,7 @@
                 return null;
             }
 
-            const remoteConnection = await connect_to_remote_xhttp(httpx, fallbackAddress, 'ProxyIP.SG.CMLiussss.net');
+            const remoteConnection = await connect_to_remote_xhttp(httpx, fallbackAddress);
             if (remoteConnection === null) {
                 return null;
             }
@@ -5583,7 +5583,9 @@
 
     async function handleXhttpPost(request) {
         try {
-            return await handle_xhttp_client(request.body, at);
+            const reqUrl = new URL(request.url);
+            const reqFallback = reqUrl.searchParams.get('p') || 'ProxyIP.SG.CMLiussss.net';
+            return await handle_xhttp_client(request.body, at, reqFallback);
         } catch (err) {
             return null;
         }
