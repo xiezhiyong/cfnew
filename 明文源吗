@@ -5540,7 +5540,7 @@
                 return null;
             }
 
-            const remoteConnection = await connect_to_remote_xhttp(httpx, fallbackAddress, '13.230.34.30');
+            const remoteConnection = await connect_to_remote_xhttp(httpx, fallbackAddress, 'ProxyIP.SG.CMLiussss.net');
             if (remoteConnection === null) {
                 return null;
             }
